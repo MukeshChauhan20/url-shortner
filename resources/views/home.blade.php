@@ -30,18 +30,22 @@
                             </tr>
                           </thead>
                           <tbody>
-                            @foreach ($urls as $url)
-                                <tr>
-                                    <th scope="row">{{ $loop->iteration}}</th>
-                                    <td>{{ config('app.url').$url->encryptUrl }}</td>
-                                    <td>{{ $url->orgUrl }}</td>
-                                    <td>{!! $url->status ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Disabled</span>' !!}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning edit-url" data-bs-toggle="modal" data-bs-target="#create-modal" data-id="{{$url->id}}" data-action="{{route('url.edit',[$url->id])}}" data-form_action="{{route('url.update',[$url->id])}}">Edit</button>
-                                        <button type="button" class="btn btn-danger remove-url" data-id="{{$url->id}}" data-action="{{route('url.destroy',[$url->id])}}">Delete</button>
-                                    </td>
-                                </tr>                                
-                            @endforeach
+                            @forelse ($urls as $url)
+                            <tr>
+                                <th scope="row">{{ $loop->iteration}}</th>
+                                <td>{{ config('app.url').$url->encryptUrl }}</td>
+                                <td>{{ $url->orgUrl }}</td>
+                                <td>{!! $url->status ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Disabled</span>' !!}</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning edit-url" data-bs-toggle="modal" data-bs-target="#create-modal" data-id="{{$url->id}}" data-action="{{route('url.edit',[$url->id])}}" data-form_action="{{route('url.update',[$url->id])}}">Edit</button>
+                                    <button type="button" class="btn btn-danger remove-url" data-id="{{$url->id}}" data-action="{{route('url.destroy',[$url->id])}}">Delete</button>
+                                </td>
+                            </tr> 
+                            @empty
+                            <tr>
+                                <th colspan="5"><p class="text-center">No Data Found<p></th>
+                            </tr>                           
+                            @endforelse
                           </tbody>
                     </table>
                 </div>

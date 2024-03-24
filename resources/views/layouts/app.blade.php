@@ -49,6 +49,7 @@
                                 </li>
                             @endif
                         @else
+                        @auth
                             @if(auth()->user()->package != 'Enterprise')
                             <li class="nav-item">
                                 <a class="btn btn-outline-success" href="#" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -56,6 +57,8 @@
                                 </a>
                             </li>
                             @endif
+                        @endauth
+                            
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -83,82 +86,85 @@
             @yield('content')
         </main>
     </div>
-    @if(auth()->user()->package != 'Enterprise')
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Upgrade Plan</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <div class="container">
-                <div class="row ">
-                    <div class="col-md-4">                        
-                        <div class="card card-pricing text-center px-3 mb-4 h-100">
-                            <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-primary text-white shadow-sm">Basic @if(auth()->user()->package == 'Basic')<span class="badge bg-warning text-dark">Active</span> @endif</span>
-                            <div class="bg-transparent card-header pt-4 border-0">
-                                <h1 class="h1 font-weight-normal text-primary text-center mb-0" >Free</h1>
-                            </div>
-                            <div class="card-body pt-0">
-                                <ul class="list-unstyled mb-4">
-                                    <li>Up to 10 links</li>
-                                    <li>Basic support on Github</li>
-                                    <li>Monthly updates</li>
-                                    <li>Free cancelation</li>
-                                </ul>
-                                @if(auth()->user()->package != 'Basic')
-                                <button type="button" class="btn btn-outline-secondary mb-3 order-now" data-package="Basic">Order now</button>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4">                        
-                        <div class="card card-pricing text-center px-3 mb-4 h-100">
-                            <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-primary text-white shadow-sm">Advance @if(auth()->user()->package == 'Advanced')<span class="badge bg-warning text-dark">Active</span> @endif</span>
-                            <div class="bg-transparent card-header pt-4 border-0">
-                                <h1 class="h1 font-weight-normal text-primary text-center mb-0" data-pricing-value="60">$<span class="price">5</span><span class="h6 text-muted ml-2">/ per month</span></h1>
-                            </div>
-                            <div class="card-body pt-0">
-                                <ul class="list-unstyled mb-4">
-                                    <li>Up to 1000 links</li>
-                                    <li>Basic support on Github</li>
-                                    <li>Monthly updates</li>
-                                    <li>Free cancelation</li>
-                                </ul>
-                                @if(auth()->user()->package != 'Advanced')
-                                <button type="button" class="btn btn-outline-secondary mb-3 order-now" data-package="Advanced">Order now</button>                                
-                                @endif
+    @auth
+        @if(auth()->user()->package != 'Enterprise')
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upgrade Plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <div class="container">
+                    <div class="row ">
+                        <div class="col-md-4">                        
+                            <div class="card card-pricing text-center px-3 mb-4 h-100">
+                                <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-primary text-white shadow-sm">Basic @if(auth()->user()->package == 'Basic')<span class="badge bg-warning text-dark">Active</span> @endif</span>
+                                <div class="bg-transparent card-header pt-4 border-0">
+                                    <h1 class="h1 font-weight-normal text-primary text-center mb-0" >Free</h1>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <ul class="list-unstyled mb-4">
+                                        <li>Up to 10 links</li>
+                                        <li>Basic support on Github</li>
+                                        <li>Monthly updates</li>
+                                        <li>Free cancelation</li>
+                                    </ul>
+                                    @if(auth()->user()->package != 'Basic')
+                                    <button type="button" class="btn btn-outline-secondary mb-3 order-now" data-package="Basic">Order now</button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="col-md-4">                        
-                        <div class="card card-pricing text-center px-3 mb-4 h-100">
-                            <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-primary text-white shadow-sm">Enterprise @if(auth()->user()->package == 'Enterprise')<span class="badge bg-warning text-dark">Active</span> @endif</span>
-                            <div class="bg-transparent card-header pt-4 border-0">
-                                <h1 class="h1 font-weight-normal text-primary text-center mb-0" data-pricing-value="60">$<span class="price">12</span><span class="h6 text-muted ml-2">/ per month</span></h1>
+                        
+                        <div class="col-md-4">                        
+                            <div class="card card-pricing text-center px-3 mb-4 h-100">
+                                <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-primary text-white shadow-sm">Advance @if(auth()->user()->package == 'Advanced')<span class="badge bg-warning text-dark">Active</span> @endif</span>
+                                <div class="bg-transparent card-header pt-4 border-0">
+                                    <h1 class="h1 font-weight-normal text-primary text-center mb-0" data-pricing-value="60">$<span class="price">5</span><span class="h6 text-muted ml-2">/ per month</span></h1>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <ul class="list-unstyled mb-4">
+                                        <li>Up to 1000 links</li>
+                                        <li>Basic support on Github</li>
+                                        <li>Monthly updates</li>
+                                        <li>Free cancelation</li>
+                                    </ul>
+                                    @if(auth()->user()->package != 'Advanced')
+                                    <button type="button" class="btn btn-outline-secondary mb-3 order-now" data-package="Advanced">Order now</button>                                
+                                    @endif
+                                </div>
                             </div>
-                            <div class="card-body pt-0">
-                                <ul class="list-unstyled mb-4">
-                                    <li>Unlimited Links</li>
-                                    <li>Basic support on Github</li>
-                                    <li>Monthly updates</li>
-                                    <li>Free cancelation</li>
-                                </ul>
-                                @if(auth()->user()->package != 'Enterprise')
-                                <button type="button" class="btn btn-outline-secondary mb-3 order-now" data-package="Enterprise">Order now</button>
-                                @endif
+                        </div>
+                        
+                        <div class="col-md-4">                        
+                            <div class="card card-pricing text-center px-3 mb-4 h-100">
+                                <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-primary text-white shadow-sm">Enterprise @if(auth()->user()->package == 'Enterprise')<span class="badge bg-warning text-dark">Active</span> @endif</span>
+                                <div class="bg-transparent card-header pt-4 border-0">
+                                    <h1 class="h1 font-weight-normal text-primary text-center mb-0" data-pricing-value="60">$<span class="price">12</span><span class="h6 text-muted ml-2">/ per month</span></h1>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <ul class="list-unstyled mb-4">
+                                        <li>Unlimited Links</li>
+                                        <li>Basic support on Github</li>
+                                        <li>Monthly updates</li>
+                                        <li>Free cancelation</li>
+                                    </ul>
+                                    @if(auth()->user()->package != 'Enterprise')
+                                    <button type="button" class="btn btn-outline-secondary mb-3 order-now" data-package="Enterprise">Order now</button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
             </div>
-          </div>
         </div>
-      </div>
-    @endif
+        @endif   
+    @endauth
+    
     </body>
 </html>
